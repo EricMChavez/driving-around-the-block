@@ -1,0 +1,48 @@
+#racetrack {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	width: 900px;
+	flex-wrap: wrap;
+	z-index: -1;
+}
+.track {
+	float: left;
+	height: 100px;
+	width: 100px;
+}
+
+.grass {
+	background-image: url('/track/track-grass.png');
+}
+.start {
+	background-image: url('/track/track-start.png');
+}
+.finish {
+	background-image: url('/track/track-finish.png');
+}
+.vertical {
+	background-image: url('/track/track-vertical.png');
+}
+.horizontal {
+	background-image: url('/track/track-horizontal.png');
+}
+.turnDown {
+	background-image: url('/track/track-90.png');
+}
+.turnLeft {
+	background-image: url('/track/track-90.png');
+	transform: rotate(90deg);
+}
+.turnUp {
+	background-image: url('/track/track-90.png');
+	transform: rotate(180deg);
+}
+.turnRight {
+	background-image: url('/track/track-90.png');
+	transform: rotate(270deg);
+}
+#car {
+	position: absolute;
+}

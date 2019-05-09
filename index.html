@@ -1,0 +1,101 @@
+
+<head>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="index.css">
+    
+</head>
+<body>
+    <div id="racetrack">
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+
+
+        <div class="track grass"></div>
+        <div class="track turnRight"></div>
+        <div class="track finish"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track start"></div>
+        <div class="track turnDown"></div>
+        <div class="track grass"></div>
+
+
+        <div class="track grass"></div>
+        <div class="track vertical"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track vertical"></div>
+        <div class="track grass"></div>
+
+
+        <div class="track grass"></div>
+        <div class="track turnUp"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track horizontal"></div>
+        <div class="track turnLeft"></div>
+        <div class="track grass"></div>
+
+
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+        <div class="track grass"></div>
+
+        
+        <div class="track grass"></div>
+        <div class="track start"></div>
+        <div class="track finish"></div>
+        <div class="track vertical"></div>
+        <div class="track horizontal"></div>
+    </div>
+    <svg height="100vh" width="100vw">
+        <path id="path" d="
+        M 600 150
+        l 100,0
+        c 25,0 50,25 50,50  
+        l 0,100
+        c 0,25 -25,50 -50,50 
+        l -100,0
+        l -100,0
+        l -100,0
+        l -100,0
+        l -100,0 
+        c -25,0 -50,-25 -50,-50
+        l 0,-100 
+        c 0,-25 25,-50 50,-50
+        l 100,0
+        " stroke="red" stroke-width="3" fill="none" />
+    </svg>
+    <div id="car"></div>
+</body>
+<script src="index.js"></script>
+</html>
+
+<!--    c 25,0 50,25 50,50          TurnDown
+        l 0,100                     GoDown
+        c 0,-25 25,-50 50,-50       TurnRight
+        l 100,0                     GoRight
+        c 0,25 -25,50 -50,50        TurnLeft
+        l -100,0                    GoLeft
+        c -25,0 -50,-25 -50,-50     TurnUp
+        l 0,-100                    GoUp
+    -->
