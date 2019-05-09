@@ -44,5 +44,19 @@
 	transform: rotate(270deg);
 }
 #car {
+	background-image: url('/car/car-blue.png');
+	background-size: contain;
 	position: absolute;
+	width: 70px;
+	height: 35px;
+	border-top: solid red 1px;
+	border-left: solid blue 1px;
+	transform-origin: center left;
+}
+#display {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	background-color: white;
+	font-size: 28px;
 }
