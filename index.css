@@ -3,11 +3,27 @@
 	top: 0;
 	left: 0;
 	display: flex;
-	width: 900px;
+	width: calc(100vw - 200px);
+	height: 90vh;
+	align-content: flex-start;
 	flex-wrap: wrap;
-	z-index: -1;
+	overflow: hidden;
+	opacity: .7;
+}
+svg {
+	width: calc(100vw - 200px);
+	height: 90vh;
+}
+#pallet {
+	width: 200px;
+	float: right;
 }
 .track {
+	float: left;
+	height: 100px;
+	width: 100px;
+}
+.trackpallet {
 	float: left;
 	height: 100px;
 	width: 100px;
@@ -28,20 +44,20 @@
 .horizontal {
 	background-image: url('/track/track-horizontal.png');
 }
-.turnDown {
-	background-image: url('/track/track-90.png');
+.turnTR {
+	background-image: url('/track/tracktr.png');
 }
-.turnLeft {
-	background-image: url('/track/track-90.png');
-	transform: rotate(90deg);
+.turnBR {
+	background-image: url('/track/trackbr.png');
 }
-.turnUp {
-	background-image: url('/track/track-90.png');
-	transform: rotate(180deg);
+.turnBL {
+	background-image: url('/track/trackbl.png');
 }
-.turnRight {
-	background-image: url('/track/track-90.png');
-	transform: rotate(270deg);
+.turnTL {
+	background-image: url('/track/tracktl.png');
+}
+.intersection {
+	background-image: url('/track/track-intersection.png');
 }
 #car {
 	background-image: url('/car/car-blue.png');
@@ -49,8 +65,6 @@
 	position: absolute;
 	width: 70px;
 	height: 35px;
-	border-top: solid red 1px;
-	border-left: solid blue 1px;
 	transform-origin: center left;
 }
 #display {
