@@ -1,12 +1,54 @@
 let path = document.getElementById('path');
 let car = document.getElementById('car');
 let step = 0;
-let speed = 4;
+let speed = 0;
+let desiredSpeed = 6;
 let direction = 'E'; //North, South, East, West
 let velocity;
-let velocityAverage = [ 0, 0 ];
+let velocityAverage;
 let tick = null;
 
+function go() {
+	document.getElementById('car').style.display = 'none';
+	clearInterval(tick);
+	step = 0;
+	drawPath();
+	document.getElementById('car').style.display = 'inline-block';
+	tick = setInterval(() => {
+		followPath(step);
+		undateSpeed();
+		step += speed;
+	}, 30);
+}
+function undateSpeed() {
+	if (speed < desiredSpeed) {
+		speed += (desiredSpeed - speed) / 30;
+	} else {
+		speed -= (speed - desiredSpeed) / 30;
+	}
+}
+function anticipateSpeed(step) {
+	let upcoming = document.elementFromPoint(path.getPointAtLength(step + 90).x, path.getPointAtLength(step + 90).y)
+		.classList[1];
+	switch (upcoming) {
+		case 'turnTR':
+		case 'turnBR':
+		case 'turnBL':
+		case 'turnTL':
+			desiredSpeed = 5;
+			break;
+		case 'start':
+		case 'horizontal':
+		case 'vertical':
+		case 'intersection':
+			desiredSpeed = 8;
+			break;
+		case 'finish':
+		case 'grass':
+			desiredSpeed = 0;
+			break;
+	}
+}
 function setStart() {
 	let startPoint = [];
 	for (let x = 0; x < 5; x++) {
@@ -18,6 +60,7 @@ function followPath(step) {
 	if (step < path.getTotalLength() - 60) {
 		let frontPoint = [ path.getPointAtLength(step + 90).x, path.getPointAtLength(step + 90).y ];
 		let backPoint = [ path.getPointAtLength(step).x, path.getPointAtLength(step).y ];
+		anticipateSpeed(step);
 		velocityCalc(backPoint);
 		setCar(backPoint, frontPoint);
 	} else {
@@ -47,15 +90,6 @@ function setCar(backPoint, frontPoint) {
 	car.style.transform = `rotate(${rotation}deg)`;
 }
 
-function go() {
-	clearInterval(tick);
-	step = 0;
-	drawPath();
-	tick = setInterval(() => {
-		followPath(step);
-		step += speed;
-	}, 30);
-}
 //
 //  Draw Path
 //
@@ -77,58 +111,60 @@ function drawPath() {
 }
 function findNext(currentX, currentY) {
 	let nextLoca = [ 0, 0 ];
-	let penPath = '';
+	let newPath = '';
 	let currentBlock = document.elementFromPoint(currentX, currentY).classList[1];
 	switch (currentBlock) {
 		case 'turnTR':
 			if (direction == 'E') {
-				newPath = 'c 25,0 50,25 50,50';
+				newPath = 'c 25,0 50,25 50,50 ';
 				direction = 'S';
 				nextLoca = [ currentX, currentY + 100 ];
 				break;
 			} else if (direction == 'N') {
-				newPath = 'c 0,-25 -25,-50 -50,-50';
+				newPath = 'c 0,-25 -25,-50 -50,-50 ';
 				direction = 'W';
 				nextLoca = [ currentX - 100, currentY ];
 				break;
 			}
 		case 'turnBR':
 			if (direction == 'S') {
-				newPath = 'c 0,25 -25,50 -50,50';
+				newPath = 'c 0,25 -25,50 -50,50 ';
 				direction = 'W';
 				nextLoca = [ currentX - 100, currentY ];
 				break;
 			} else if (direction == 'E') {
-				newPath = 'c 25,0 50,-25 50,-50';
+				newPath = 'c 25,0 50,-25 50,-50 ';
 				direction = 'N';
 				nextLoca = [ currentX, currentY - 100 ];
 				break;
 			}
 		case 'turnBL':
 			if (direction == 'W') {
-				newPath = 'c -25,0 -50,-25 -50,-50';
+				newPath = 'c -25,0 -50,-25 -50,-50 ';
 				direction = 'N';
 				nextLoca = [ currentX, currentY - 100 ];
 				break;
 			} else if (direction == 'S') {
-				newPath = 'c 0,25 25,50 50,50';
+				newPath = 'c 0,25 25,50 50,50 ';
 				direction = 'E';
 				nextLoca = [ currentX + 100, currentY ];
 				break;
 			}
 		case 'turnTL':
 			if (direction == 'N') {
-				newPath = 'c 0,-25 25,-50 50,-50';
+				newPath = 'c 0,-25 25,-50 50,-50 ';
 				direction = 'E';
 				nextLoca = [ currentX + 100, currentY ];
 				break;
 			} else if (direction == 'W') {
-				newPath = 'c -25,0 -50,25 -50,50';
+				newPath = 'c -25,0 -50,25 -50,50 ';
 				direction = 'S';
 				nextLoca = [ currentX, currentY + 100 ];
 				break;
 			}
+
 		case 'horizontal':
+		case 'intersection':
 			if (direction == 'E') {
 				newPath = 'l 100,0 ';
 				nextLoca = [ currentX + 100, currentY ];
@@ -139,32 +175,14 @@ function findNext(currentX, currentY) {
 				break;
 			}
 		case 'vertical':
-			if (direction == 'N') {
-				newPath = 'l 0,-100';
-				nextLoca = [ currentX, currentY - 100 ];
-				break;
-			} else if (direction == 'S') {
-				newPath = 'l 0,100';
-				nextLoca = [ currentX, currentY + 100 ];
-				break;
-			}
 		case 'intersection':
 			if (direction == 'N') {
-				newPath = 'l 0,-100';
+				newPath = 'l 0,-100 ';
 				nextLoca = [ currentX, currentY - 100 ];
 				break;
 			} else if (direction == 'S') {
-				newPath = 'l 0,100';
+				newPath = 'l 0,100 ';
 				nextLoca = [ currentX, currentY + 100 ];
-				break;
-			}
-			if (direction == 'E') {
-				newPath = 'l 100,0 ';
-				nextLoca = [ currentX + 100, currentY ];
-				break;
-			} else if (direction == 'W') {
-				newPath = 'l -100,0 ';
-				nextLoca = [ currentX - 100, currentY ];
 				break;
 			}
 		case 'grass':
@@ -180,8 +198,10 @@ function findNext(currentX, currentY) {
 			nextLoca = 'stop';
 			newPath = 'l 100,0 ';
 			break;
+		default:
+			nextLoca = 'stop';
+			alert('this is a stupid track!');
 	}
-
 	return [ nextLoca, newPath ];
 }
 //

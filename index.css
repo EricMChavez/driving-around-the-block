@@ -66,6 +66,7 @@ svg {
 	width: 70px;
 	height: 35px;
 	transform-origin: center left;
+	display: none;
 }
 #display {
 	position: fixed;
@@ -73,4 +74,14 @@ svg {
 	z-index: 100;
 	background-color: white;
 	font-size: 28px;
+}
+button {
+	width: 200px;
+	height: 50px;
+	font-size: 24px;
+	color: white;
+	background-color: rgb(46, 46, 139);
+}
+button:hover {
+	background-color: rgb(48, 48, 180);
 }
