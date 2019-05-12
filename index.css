@@ -8,7 +8,7 @@
 	align-content: flex-start;
 	flex-wrap: wrap;
 	overflow: hidden;
-	opacity: .7;
+	opacity: 1;
 }
 svg {
 	width: calc(100vw - 200px);
@@ -60,7 +60,7 @@ svg {
 	background-image: url('/track/track-intersection.png');
 }
 #car {
-	background-image: url('/car/car-blue.png');
+	background-image: url('/car/car-red.png');
 	background-size: contain;
 	position: absolute;
 	width: 70px;

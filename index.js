@@ -2,7 +2,7 @@ let path = document.getElementById('path');
 let car = document.getElementById('car');
 let step = 0;
 let speed = 0;
-let desiredSpeed = 6;
+let desiredSpeed = 5;
 let direction = 'E'; //North, South, East, West
 let velocity;
 let velocityAverage;
@@ -11,7 +11,9 @@ let tick = null;
 function go() {
 	document.getElementById('car').style.display = 'none';
 	clearInterval(tick);
+	speed = 0;
 	step = 0;
+	desiredSpeed = 6;
 	drawPath();
 	document.getElementById('car').style.display = 'inline-block';
 	tick = setInterval(() => {
@@ -23,6 +25,8 @@ function go() {
 function undateSpeed() {
 	if (speed < desiredSpeed) {
 		speed += (desiredSpeed - speed) / 30;
+	} else if (speed > desiredSpeed && speed > 5) {
+		speed -= (speed - desiredSpeed) / 10;
 	} else {
 		speed -= (speed - desiredSpeed) / 30;
 	}
@@ -35,7 +39,7 @@ function anticipateSpeed(step) {
 		case 'turnBR':
 		case 'turnBL':
 		case 'turnTL':
-			desiredSpeed = 5;
+			desiredSpeed = 3;
 			break;
 		case 'start':
 		case 'horizontal':
