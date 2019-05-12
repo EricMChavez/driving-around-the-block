@@ -54,37 +54,37 @@ svg {
 }
 
 .grass {
-	background-image: url('/track/track-grass.png');
+	background-image: url('track-grass.png');
 }
 .start {
-	background-image: url('/track/track-start.png');
+	background-image: url('track-start.png');
 }
 .finish {
-	background-image: url('/track/track-finish.png');
+	background-image: url('track-finish.png');
 }
 .vertical {
-	background-image: url('/track/track-vertical.png');
+	background-image: url('track-vertical.png');
 }
 .horizontal {
-	background-image: url('/track/track-horizontal.png');
+	background-image: url('track-horizontal.png');
 }
 .turnTR {
-	background-image: url('/track/tracktr.png');
+	background-image: url('tracktr.png');
 }
 .turnBR {
-	background-image: url('/track/trackbr.png');
+	background-image: url('trackbr.png');
 }
 .turnBL {
-	background-image: url('/track/trackbl.png');
+	background-image: url('trackbl.png');
 }
 .turnTL {
-	background-image: url('/track/tracktl.png');
+	background-image: url('tracktl.png');
 }
 .intersection {
-	background-image: url('/track/track-intersection.png');
+	background-image: url('track-intersection.png');
 }
 #car {
-	background-image: url('/car/car-red.png');
+	background-image: url('car-red.png');
 	background-size: contain;
 	position: absolute;
 	width: 70px;
