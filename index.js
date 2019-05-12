@@ -7,21 +7,11 @@ let direction = 'E'; //North, South, East, West
 let velocity;
 let velocityAverage;
 let tick = null;
+let ready = false;
 
-function go() {
-	document.getElementById('car').style.display = 'none';
-	clearInterval(tick);
-	speed = 0;
-	step = 0;
-	desiredSpeed = 6;
-	drawPath();
-	document.getElementById('car').style.display = 'inline-block';
-	tick = setInterval(() => {
-		followPath(step);
-		undateSpeed();
-		step += speed;
-	}, 30);
-}
+//
+// Car Movement
+//
 function undateSpeed() {
 	if (speed < desiredSpeed) {
 		speed += (desiredSpeed - speed) / 30;
@@ -39,7 +29,7 @@ function anticipateSpeed(step) {
 		case 'turnBR':
 		case 'turnBL':
 		case 'turnTL':
-			desiredSpeed = 3;
+			desiredSpeed = 5;
 			break;
 		case 'start':
 		case 'horizontal':
@@ -53,7 +43,7 @@ function anticipateSpeed(step) {
 			break;
 	}
 }
-function setStart() {
+function getStart() {
 	let startPoint = [];
 	for (let x = 0; x < 5; x++) {
 		startPoint.push([ path.getPointAtLength(step).x, path.getPointAtLength(step).y ]);
@@ -83,11 +73,11 @@ function velocityCalc(backPoint) {
 }
 function setCar(backPoint, frontPoint) {
 	car.style.left = frontPoint[0] + 'px';
-	car.style.top = frontPoint[1] - 18 + 'px';
+	car.style.top = frontPoint[1] + 32 + 'px';
 	let rotation =
 		Math.atan2(
-			backPoint[1] - velocityAverage[1] * 2.5 - frontPoint[1],
-			backPoint[0] - velocityAverage[0] * 2.5 - frontPoint[0]
+			backPoint[1] - velocityAverage[1] * 1.5 - frontPoint[1],
+			backPoint[0] - velocityAverage[0] * 1.5 - frontPoint[0]
 		) *
 		180 /
 		Math.PI;
@@ -97,6 +87,7 @@ function setCar(backPoint, frontPoint) {
 //
 //  Draw Path
 //
+
 function drawPath() {
 	let start = [
 		document.getElementsByClassName('start')[0].offsetLeft,
@@ -111,7 +102,7 @@ function drawPath() {
 		nextPoint = findNext(nextPoint[0][0], nextPoint[0][1]);
 	}
 	path.setAttribute('d', penPath);
-	velocity = setStart();
+	velocity = getStart();
 }
 function findNext(currentX, currentY) {
 	let nextLoca = [ 0, 0 ];
@@ -192,24 +183,39 @@ function findNext(currentX, currentY) {
 		case 'grass':
 			nextLoca = 'stop';
 			newPath = '';
-			alert('this is a stupid track!');
+			alert('This track is incomplete!');
+			ready = false;
 			break;
 		case 'start':
 			nextLoca = 'stop';
 			newPath = 'Z';
+			ready = true;
 			break;
 		case 'finish':
 			nextLoca = 'stop';
 			newPath = 'l 100,0 ';
+			ready = true;
 			break;
 		default:
 			nextLoca = 'stop';
-			alert('this is a stupid track!');
+			ready = false;
+			alert('This track is incomplete!');
 	}
 	return [ nextLoca, newPath ];
 }
+function verify() {
+	let startLine = document.getElementsByClassName('start');
+	let finishLine = document.getElementsByClassName('finish');
+	if (startLine.length == 2 && finishLine.length == 2) {
+		return true;
+	} else {
+		alert('The track needs 1 start and 1 finish');
+		return false;
+	}
+}
+
 //
-// Draggable
+// Draggables
 //
 let dragTrack;
 let tracks = document.getElementsByClassName('track');
@@ -244,4 +250,35 @@ function drop(e) {
 	e.preventDefault();
 	this.style.opacity = 1;
 	this.classList = `track ${dragTrack}`;
+}
+
+//
+// Buttons
+//
+document.addEventListener('keydown', function(e) {
+	if (e.key == 'Enter') {
+		e.preventDefault;
+		go();
+	}
+});
+function go() {
+	car.style.display = 'none';
+	clearInterval(tick);
+	speed = 0;
+	step = 0;
+	desiredSpeed = 6;
+	if (verify() == true) {
+		drawPath();
+		if (ready == true) {
+			car.style.display = 'inline-block';
+			tick = setInterval(() => {
+				followPath(step);
+				undateSpeed();
+				step += speed;
+			}, 30);
+		}
+	}
+}
+function clearTrack() {
+	location.reload();
 }

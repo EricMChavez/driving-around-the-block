@@ -5,6 +5,7 @@
     
 </head>
 <body>
+    <header><h1>Track Racer 9000!</h1></header>
     <div id="racetrack">
             <div class="track grass"></div>
             <div class="track grass"></div>
@@ -135,6 +136,7 @@
     </div>
     <div id="pallet">
         <button onclick="go()">GO!</button>
+        <h2>DRAG & DROP TRACK</h2>
         <div draggable="true" class="trackpallet start"></div>
         <div draggable="true" class="trackpallet finish"></div>
         <div draggable="true" class="trackpallet grass"></div>
@@ -146,10 +148,11 @@
         <div draggable="true" class="trackpallet turnBL"></div>
         <div draggable="true" class="trackpallet turnTR"></div>
         <div draggable="true" class="trackpallet turnTL"></div>
+        <button onclick="clearTrack()">Clear</button>
     </div>
     <svg>
         <path id="path" d="
-        " stroke="red" stroke-width="1" fill="none" />
+        " stroke="red" stroke-width="0" fill="none" />
     </svg>
     <div id="car"></div>
     
